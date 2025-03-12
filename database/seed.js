@@ -21,4 +21,4 @@ const seedProjects = async (numEntries = 3) => {
   await supabase.from('projects').insert(projects)
 }
 
-await seedProjects(3)
+await seedProjects(10)
