@@ -21,6 +21,11 @@ const router = createRouter({
       component: () => import('@/views/SingleProjectView.vue'),
     },
     {
+      path: '/project:catchAll(.*)*',
+      name: 'project-not-found',
+      component: h('p', { style: 'color: red;' }, '404 Project Not Found'),
+    },
+    {
       path: '/:catchAll(.*)*',
       name: 'NotFound',
       component: h('p', { style: 'color: red;' }, '404 Not Found'),
