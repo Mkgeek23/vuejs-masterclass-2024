@@ -4,6 +4,7 @@ import { projectQuery, type Project } from '@/utils/supaQueries'
 const project = ref<Project | null>(null)
 
 const route = useRoute('/projects/[slug]')
+console.log('Route:', route)
 
 watch(
   () => project.value?.name,
