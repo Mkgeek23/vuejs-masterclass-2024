@@ -8,11 +8,14 @@ import { RouterLink } from 'vue-router'
 
 const projects = ref<Tables<'projects'>[] | null>(null)
 
-;(async () => {
+const getProjects = async () => {
   const { data, error } = await supabase.from('projects').select()
   if (error) console.error(error)
   projects.value = data
-})()
+}
+
+await getProjects()
+
 const columns: ColumnDef<Tables<'projects'>>[] = [
   {
     accessorKey: 'name',
@@ -52,13 +55,3 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
 <template>
   <DataTable v-if="projects" :columns="columns" :data="projects" />
 </template>
-
-<style scoped>
-td {
-  @apply p-0;
-}
-
-td > * {
-  @apply p-4;
-}
-</style>
