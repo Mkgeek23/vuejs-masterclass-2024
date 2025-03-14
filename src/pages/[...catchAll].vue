@@ -1,10 +1,7 @@
-<script lang="ts">
-import { RouterLink } from 'vue-router'
+<script setup lang="ts">
+import { useErrorStore } from '@/stores/error'
+
+useErrorStore().setError()
 </script>
 
-<template>
-  <div>
-    <h1>404 Not Found</h1>
-    <RouterLink to="/">HomePage</RouterLink>
-  </div>
-</template>
+<template></template>
