@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient'
-import { h, ref } from 'vue'
-import type { Tables } from '../../../database/types'
 import type { ColumnDef } from '@tanstack/vue-table'
-import DataTable from '@/components/ui/data-table/DataTable.vue'
 import { RouterLink } from 'vue-router'
-import { usePageStore } from '@/stores/page'
 import type { QueryData } from '@supabase/supabase-js'
 
 usePageStore().pageData.title = 'My Tasks'
@@ -86,14 +82,5 @@ const columns: ColumnDef<TaskWithProjects[0]>[] = [
 </script>
 
 <template>
-  <div>
-    <h1>Tasks Page</h1>
-    <RouterLink to="/">Home Page</RouterLink>
-    <DataTable v-if="tasks" :columns="columns" :data="tasks" />
-    <ul>
-      <li v-for="task in tasks" :key="task[0].id">
-        {{ task[0].name }}
-      </li>
-    </ul>
-  </div>
+  <DataTable v-if="tasks" :columns="columns" :data="tasks" />
 </template>
