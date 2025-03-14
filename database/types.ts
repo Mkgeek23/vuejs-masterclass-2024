@@ -11,24 +11,27 @@ export type Database = {
     Tables: {
       projects: {
         Row: {
-          collabolators: string
+          collaborators: string
           created_at: string
+          description: string | null
           id: number
           name: string
           slug: string
           status: Database["public"]["Enums"]["current_status"]
         }
         Insert: {
-          collabolators?: string
+          collaborators?: string
           created_at?: string
+          description?: string | null
           id?: never
           name: string
           slug: string
           status?: Database["public"]["Enums"]["current_status"]
         }
         Update: {
-          collabolators?: string
+          collaborators?: string
           created_at?: string
+          description?: string | null
           id?: never
           name?: string
           slug?: string
@@ -38,7 +41,7 @@ export type Database = {
       }
       tasks: {
         Row: {
-          collabolators: string
+          collaborators: string[]
           created_at: string
           description: string
           due_date: string | null
@@ -48,7 +51,7 @@ export type Database = {
           status: Database["public"]["Enums"]["current_status"]
         }
         Insert: {
-          collabolators?: string
+          collaborators?: string[]
           created_at?: string
           description: string
           due_date?: string | null
@@ -58,7 +61,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["current_status"]
         }
         Update: {
-          collabolators?: string
+          collaborators?: string[]
           created_at?: string
           description?: string
           due_date?: string | null
