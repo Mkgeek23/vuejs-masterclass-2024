@@ -6,20 +6,27 @@ import type { ColumnDef } from '@tanstack/vue-table'
 import DataTable from '@/components/ui/data-table/DataTable.vue'
 import { RouterLink } from 'vue-router'
 import { usePageStore } from '@/stores/page'
+import type { QueryData } from '@supabase/supabase-js'
 
 usePageStore().pageData.title = 'My Tasks'
 
-const tasks = ref<Tables<'tasks'>[] | null>(null)
+const tasksWithProjectsQuery = supabase.from('tasks').select(`*, projects(
+    id, name, slug
+  )`)
+
+type TaskWithProjects = QueryData<typeof tasksWithProjectsQuery>
+
+const tasks = ref<TaskWithProjects[] | null>(null)
 
 const getTasks = async () => {
-  const { data, error } = await supabase.from('tasks').select()
+  const { data, error } = await tasksWithProjectsQuery
   if (error) console.error(error)
   tasks.value = data
 }
 
 await getTasks()
 
-const columns: ColumnDef<Tables<'tasks'>>[] = [
+const columns: ColumnDef<TaskWithProjects[0]>[] = [
   {
     accessorKey: 'name',
     header: () => h('div', { class: 'text-left' }, 'Name'),
@@ -49,10 +56,19 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
     },
   },
   {
-    accessorKey: 'project_id',
+    accessorKey: 'projects',
     header: () => h('div', { class: 'text-left' }, 'Project'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('project_id'))
+      return row.original.projects
+        ? h(
+            RouterLink,
+            {
+              to: `/projects/${row.original.projects.slug}`,
+              class: 'text-left font-medium hover:bg-muted block w-full',
+            },
+            () => row.original.projects.name,
+          )
+        : ''
     },
   },
   {
@@ -75,8 +91,8 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
     <RouterLink to="/">Home Page</RouterLink>
     <DataTable v-if="tasks" :columns="columns" :data="tasks" />
     <ul>
-      <li v-for="task in tasks" :key="task.id">
-        {{ task.name }}
+      <li v-for="task in tasks" :key="task[0].id">
+        {{ task[0].name }}
       </li>
     </ul>
   </div>
