@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppErrorDevSection: typeof import('./src/components/app_error/AppErrorDevSection.vue')['default']
     AppErrorPage: typeof import('./src/components/app_error/AppErrorPage.vue')['default']
+    AppErrorProdSection: typeof import('./src/components/app_error/AppErrorProdSection.vue')['default']
     AuthLayout: typeof import('./src/components/layout/main/AuthLayout.vue')['default']
     Avatar: typeof import('./src/components/ui/avatar/Avatar.vue')['default']
     AvatarFallback: typeof import('./src/components/ui/avatar/AvatarFallback.vue')['default']
