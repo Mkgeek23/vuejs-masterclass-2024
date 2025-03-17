@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Button from '@/components/ui/button/Button.vue'
 import SidebarLinks from './SidebarLinks.vue'
+import { logout } from '@/utils/supaAuth'
 
 const links = [
   {
@@ -37,8 +38,10 @@ const accountLinks = [
   },
 ]
 
-const executeAction = (linkTitle: string) => {
+const executeAction = async (linkTitle: string) => {
   if (linkTitle === 'Sign Out') {
+    const { logout } = await import('@/utils/supaAuth')
+    await logout()
   }
 }
 </script>
